@@ -1,11 +1,5 @@
 # WebKurierPhoneCore
 AI translator and German A1–C1 course 🇩🇪 with voice, calls, dialogs and tests. Includes fast translation, speech practice and vocabulary trainer. Multilingual menu with flags 🇷🇺 🇺🇦 🇵🇱 🇭🇷 🇩🇪 🇬🇧 🇺🇸 🇳🇱 🇮🇹 🇫🇷 🇵🇹 🇧🇬 🇷🇴 🇳🇴 🇫🇮 🇸🇪 🇭🇺 🇨🇿 🇸🇰 🇸🇮 🇷🇸.Готово! Я добавил в README.md полноценный раздел про подключение GPT-чата / нейросети, чтобы:
-	•	мобильное приложение могло использовать GPT-диалоги;
-	•	уроки A1–C1 могли генерироваться динамически;
-	•	пользователь мог практиковать речь с ИИ-учителем;
-	•	можно было переключать модели (OpenAI, local LLM, WebKurierCore-AI);
-	•	всё оставалось в будущем совместимым с WebKurierHybrid.
-
 
 ⸻
 
