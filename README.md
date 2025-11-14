@@ -1,158 +1,215 @@
 # WebKurierPhoneCore
 
 Backend for the AI-powered multilingual translator, German A1–C1 learning system, and GPT-based dialog assistant.
+Supports fast translation, real-time calls, speech dialogs, lessons, tests, vocabulary trainer, and WhatsApp/Telegram integration.
+
+🌍 Multilingual Description
+
+(EN/DE/UA/RU)
 
 ⸻
 
 🇬🇧 English
 
 WebKurierPhoneCore is the backend engine for our mobile translator + German learning platform (A1–C1).
-It supports translation, voice dialogs, lessons, speech practice, calls — and now GPT-powered AI teacher.
+It includes:
+	•	Real-time translation (text/voice)
+	•	AI voice calls with instant interpretation
+	•	GPT dialog assistant (chat + speaking)
+	•	German A1–C1 lessons with audio, images, videos
+	•	Vocabulary trainer + spaced repetition (SRS)
+	•	Pronunciation practice
+	•	User progress tracking
+	•	Multilingual interface with flags
+🇬🇧 🇺🇸 🇩🇪 🇺🇦 🇷🇺 🇵🇱 🇭🇷 🇫🇷 🇮🇹 🇪🇸 🇵🇹 🇸🇪 🇳🇴 🇫🇮 🇩🇰 🇳🇱 🇨🇿 🇸🇰 🇸🇮 🇷🇴 🇧🇬 🇭🇺 🇷🇸
+
+Works via REST API + WebSocket for live calls.
 
 ⸻
 
-✨ Features
-	•	AI translator (text, voice, camera)
-	•	German A1–C1 lessons (grammar, vocabulary, dialogs, tests)
-	•	Speaking practice with AI
-	•	Voice calls + speech recognition
-	•	Vocabulary trainer with spaced repetition
-	•	GPT / AI Chat integration (OpenAI, local LLM, WebKurierCore-AI)
-	•	Dynamic lesson generation (AI can create explanations, exercises, dialogs)
-	•	Multilingual interface (EN/DE/UA/RU, more coming)
-	•	PDF progress reports for Jobcenter
-	•	REST API + WebSocket
+🇩🇪 Deutsch
+
+WebKurierPhoneCore ist die Backend-Plattform für unseren mobilen Übersetzer und das Deutsch-Lernsystem (A1–C1).
+Enthält:
+	•	Echtzeit-Übersetzung (Text/Stimme)
+	•	KI-Telefonie mit Sofort-Dolmetscher
+	•	GPT-Dialogassistent
+	•	Deutschkurse A1–C1 mit Audio, Bildern und Videos
+	•	Vokabeltrainer + Tests
+	•	Aussprachetraining
+	•	Fortschrittsanalyse
+	•	Mehrsprachiges Menü mit Flaggen
 
 ⸻
 
-🤖 AI Chat / GPT Integration
+🇺🇦 Українська
 
-WebKurierPhoneCore provides a unified adapter to connect any AI model:
+WebKurierPhoneCore — це бекенд для мобільного перекладача та системи навчання німецької мови (A1–C1).
 
-Supported Models
-	•	OpenAI GPT-4, GPT-5
-	•	Local models (Mistral, LLaMA, Gemma) through WebKurierCore
-	•	WebKurierCore-AI — internal engine
-	•	Custom private models via API
-
-API Endpoints
-
-POST /ai/chat
-{
-  "model": "gpt-4o-mini",
-  "prompt": "Explain Dativ in German with examples"
-}
-
-Use Cases
-	•	Grammar explanations (A1–C1)
-	•	Dialog practice (AI plays the role of teacher)
-	•	Correcting user speech or text
-	•	Generating personal lessons
-	•	Creating vocabulary lists
-	•	Preparing Jobcenter-friendly reports
-
-⸻
-
-🔧 Tech Stack
-	•	Python / FastAPI
-	•	AI Chat Adapter (OpenAI + local LLMs)
-	•	WebSocket dialog engine
-	•	PostgreSQL + Redis
-	•	Docker-ready
-
-⸻
-
-📁 Project Structure
-
-WebKurierPhoneCore/
-├── src/
-│   ├── api/
-│   │   ├── translate.py
-│   │   ├── lessons.py
-│   │   ├── call.py
-│   │   ├── ai_chat.py      <-- GPT / LLM endpoint
-│   │   └── auth.py
-│   ├── core/
-│   │   ├── ai_adapter.py   <-- model routing (GPT, local, WK-AI)
-│   │   ├── tts.py
-│   │   ├── stt.py
-│   │   └── dialog_engine.py
-│   └── lessons/
-│       └── de_A1/...
-
-
-⸻
-
-🔗 Integration
-	•	WebKurierPhone-iOS (SwiftUI) – full AI support
-	•	WebKurierPhone-Android (Jetpack Compose)
-	•	WebKurierCore – central auth & AI router
-	•	WebKurierHybrid – CI/CD, deployments
+Функції:
+	•	Переклад у реальному часі
+	•	Голосові дзвінки з AI-перекладом
+	•	GPT-чат і голосовий асистент
+	•	Курси німецької A1–C1 з відео й аудіо
+	•	Тести, вправи, словник
+	•	Тренування вимови
+	•	Підтримка багатьох мов
 
 ⸻
 
 🇷🇺 Русский
 
-WebKurierPhoneCore — это backend-платформа для переводчика, курсов немецкого A1–C1, голосовых звонков и GPT-диалогов с ИИ-учителем.
+WebKurierPhoneCore — серверная часть мобильного переводчика и системы обучения немецкому A1–C1.
+
+Возможности:
+	•	Мгновенный перевод текста и голоса
+	•	Звонки с AI-переводчиком
+	•	GPT-чат и голосовой ассистент
+	•	Немецкий A1–C1 с уроками, видео, картинками
+	•	Лексика, тесты, тренировка произношения
+	•	Многоязычное меню с флагами
 
 ⸻
 
-✨ Возможности
-	•	Переводчик (текст, голос, камера)
-	•	Уроки и упражнения A1–C1
-	•	Разговорная практика с ИИ
-	•	Голосовые звонки
-	•	Интервальные тренировки слов
-	•	Поддержка GPT и любых нейросетей
-	•	Генерация уроков и объяснений через ИИ
-	•	Мультиязычное меню EN/DE/UA/RU
-	•	API + WebSocket
+🚀 Features
 
-⸻
+🔊 AI Translator
+	•	Text → Text
+	•	Voice → Voice
+	•	Photo translation (OCR)
+	•	Auto-language detection
 
-🤖 Интеграция GPT / Нейросети
+📞 AI Call Assistant
+	•	Real-time interpreter during a phone call
+	•	WebSocket low latency
+	•	Supports WhatsApp, Telegram, native dialer
 
-Система подключает любые модели через единый адаптер:
+🎓 German A1–C1 Course
+	•	Lessons (audio, text, pictures, dialogues)
+	•	Grammar blocks
+	•	Vocabulary lists
+	•	Exercises + tests
+	•	Speaking practice via microphone
+	•	Automatic exam preparation (DTZ, TELC, Goethe)
 
-Поддерживаемые модели
-	•	OpenAI GPT-4 / GPT-5
-	•	Локальные модели (Mistral, LLaMA, Gemma)
-	•	WebKurierCore-AI (внутренний ИИ)
-	•	Частные модели через API
+Lessons stored as:
 
-Примеры использования
-	•	объяснение грамматики
-	•	генерация диалогов
-	•	исправление произношения
-	•	создание персональных уроков
-	•	объяснение ошибок
-	•	чат-репетитор 24/7
+/lessons/A1/01_introduction.json
+/lessons/A1/02_alphabet.json
+/lessons/B1/...
+/lessons/C1/...
 
-⸻
+🤖 GPT / AI Chat
+	•	ChatGPT-style conversation
+	•	Task assistance
+	•	Correction of pronunciation & grammar
+	•	Speaking roleplay dialogs
 
-🚀 Установка
+API:
 
-git clone https://github.com/<yourname>/WebKurierPhoneCore
-cd WebKurierPhoneCore
-pip install -r requirements.txt
-uvicorn src.main:app --reload
+POST /chat/gpt
 
 
 ⸻
 
-🌍 Supported Languages
-	•	🇬🇧 English
-	•	🇩🇪 Deutsch
-	•	🇺🇦 Українська
-	•	🇷🇺 Русский
+📡 API Overview
 
-Next wave: 🇵🇱 🇭🇷 🇳🇱 🇮🇹 🇫🇷 🇵🇹 🇧🇬 🇷🇴 🇳🇴 🇫🇮 🇸🇪 🇭🇺 🇨🇿 🇸🇰 🇸🇮 🇷🇸 🇺🇸
+Translation
+
+POST /translate
+{
+  "from": "auto",
+  "to": "de",
+  "text": "Hello"
+}
+
+Voice Call
+
+POST /call/start
+POST /call/stop
+WS  /call/live
+
+Lessons
+
+GET /lessons/A1
+GET /lessons/A1/01
+
+Vocabulary / Progress
+
+GET /user/progress
+POST /user/word/save
+
 
 ⸻
 
-📦 License
+🏗 Architecture
 
-© 2025 Vladyslav Hushchyn — WebKurier Project.
+WebKurierPhoneCore
+│
+├── src/
+│   ├── api/
+│   │   ├── translate.py
+│   │   ├── call.py
+│   │   ├── lessons.py
+│   │   ├── gpt.py
+│   ├── core/
+│   │   ├── tts/
+│   │   ├── stt/
+│   │   ├── translator/
+│   │   ├── call_engine/
+│   │   └── gpt_engine/
+│   ├── models/
+│   └── utils/
+│
+├── lessons/
+│   ├── A1/
+│   ├── A2/
+│   ├── B1/
+│   ├── B2/
+│   ├── C1/
+│
+└── docker/
+
+
+⸻
+
+🐳 Docker
+
+version: "3.9"
+services:
+  phonecore:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./lessons:/app/lessons
+    environment:
+      OPENAI_KEY=${OPENAI_KEY}
+      TRANSLATE_API=${TRANSLATE_API}
+
+Старт:
+
+docker compose up --build
+
+
+⸻
+
+🔗 Integrations
+	•	Telegram bot
+	•	WhatsApp bot
+	•	WebKurierCore
+	•	WebKurierPhone-iOS
+	•	WebKurierPhone-Android
+	•	WebKurierChain (логины, хранение данных)
+	•	WebKurierSecurity (GDPR, шифрование)
+
+⸻
+
+🏁 Status
+
+Version: v0.1 (foundation is ready)
+Languages: EN / DE / UA / RU (expandable to 25+)
+Apps: iOS + Android (native)
 
 ⸻
 
