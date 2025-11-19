@@ -1,180 +1,63 @@
 # WebKurierPhoneCore
 
-Backend for the AI-powered multilingual translator, German A1–C1 learning system, and GPT-based dialog assistant.
-Supports fast translation, real-time calls, speech dialogs, lessons, tests, vocabulary trainer, and WhatsApp/Telegram integration.
+Backend for the AI-powered multilingual translator, German A1–C1 learning system, and GPT-based dialog assistant with **live AI agents in calls**.
 
-🌍 Multilingual Description
+Part of the **WebKurierHybrid** ecosystem (Core + Drone + Security + Chain + Phone + Bot).
 
-(EN/DE/UA/RU)
+---
 
-⸻
+## 🇬🇧 English
 
-🇬🇧 English
+**WebKurierPhoneCore** is the backend engine for our mobile translator and German learning platform (A1–C1). It powers:
 
-WebKurierPhoneCore is the backend engine for our mobile translator + German learning platform (A1–C1).
-It includes:
-	•	Real-time translation (text/voice)
-	•	AI voice calls with instant interpretation
-	•	GPT dialog assistant (chat + speaking)
-	•	German A1–C1 lessons with audio, images, videos
-	•	Vocabulary trainer + spaced repetition (SRS)
-	•	Pronunciation practice
-	•	User progress tracking
-	•	Multilingual interface with flags
-🇬🇧 🇺🇸 🇩🇪 🇺🇦 🇷🇺 🇵🇱 🇭🇷 🇫🇷 🇮🇹 🇪🇸 🇵🇹 🇸🇪 🇳🇴 🇫🇮 🇩🇰 🇳🇱 🇨🇿 🇸🇰 🇸🇮 🇷🇴 🇧🇬 🇭🇺 🇷🇸
+- Real-time translation (text / voice / photo OCR)
+- AI voice calls with instant interpretation (REST + WebSocket)
+- GPT dialog assistant (chat + speaking mode)
+- German A1–C1 lessons with audio, pictures and videos
+- Vocabulary trainer + spaced repetition (SRS)
+- Pronunciation practice with STT/TTS
+- User progress tracking
+- Multilingual interface (25+ languages with flags)
 
-Works via REST API + WebSocket for live calls.
+### AI Agents (Calls, Chat & Learning)
 
-⸻
+Core mobile agents:
+- `TranslatorAgent` — real-time text/voice translation, auto-language detect  
+- `VoiceAgent` — VoIP + STT/TTS pipeline  
+- `CallAgent` — call orchestration & routing  
+- `GPTDialogAgent` — GPT chat + speaking mode  
+- `LessonsAgent` — A1–C1 lessons, tasks, exams  
+- `ProgressAgent` — stats, vocabulary, SRS
 
-🇩🇪 Deutsch
+Expert & conversational agents (activated per topic/user choice):
+- Legal / Business / Accountant / Marketing / Medical / Math / Physics agents  
+- Learning personas: `TeacherAgent`, `FriendlyChatAgent`, `RoleplayAgent`,  
+  `CasualPartnerAgent`, `RomanticAgent` (romantic dialog for language practice)
 
-WebKurierPhoneCore ist die Backend-Plattform für unseren mobilen Übersetzer und das Deutsch-Lernsystem (A1–C1).
-Enthält:
-	•	Echtzeit-Übersetzung (Text/Stimme)
-	•	KI-Telefonie mit Sofort-Dolmetscher
-	•	GPT-Dialogassistent
-	•	Deutschkurse A1–C1 mit Audio, Bildern und Videos
-	•	Vokabeltrainer + Tests
-	•	Aussprachetraining
-	•	Fortschrittsanalyse
-	•	Mehrsprachiges Menü mit Flaggen
+### API Overview (short)
 
-⸻
+- Translation  
+  `POST /translate` — `{ "from": "auto", "to": "de", "text": "Hello" }`
 
-🇺🇦 Українська
+- Calls  
+  `POST /call/start` · `POST /call/stop` · `WS /call/live`
 
-WebKurierPhoneCore — це бекенд для мобільного перекладача та системи навчання німецької мови (A1–C1).
+- Lessons  
+  `GET /lessons/{level}` · `GET /lessons/{level}/{id}`
 
-Функції:
-	•	Переклад у реальному часі
-	•	Голосові дзвінки з AI-перекладом
-	•	GPT-чат і голосовий асистент
-	•	Курси німецької A1–C1 з відео й аудіо
-	•	Тести, вправи, словник
-	•	Тренування вимови
-	•	Підтримка багатьох мов
+- Vocabulary & Progress  
+  `GET /user/progress` · `POST /user/word/save`
 
-⸻
+### Architecture (high-level)
 
-🇷🇺 Русский
+- `src/api/` — translate, call, lessons, GPT/chat, agents routing  
+- `src/core/` — TTS, STT, translator, call engine, GPT engine, agents  
+- `lessons/` — JSON lessons A1–C1  
+- `docker/` — Docker & deployment files
 
-WebKurierPhoneCore — серверная часть мобильного переводчика и системы обучения немецкому A1–C1.
+### Docker
 
-Возможности:
-	•	Мгновенный перевод текста и голоса
-	•	Звонки с AI-переводчиком
-	•	GPT-чат и голосовой ассистент
-	•	Немецкий A1–C1 с уроками, видео, картинками
-	•	Лексика, тесты, тренировка произношения
-	•	Многоязычное меню с флагами
-
-⸻
-
-🚀 Features
-
-🔊 AI Translator
-	•	Text → Text
-	•	Voice → Voice
-	•	Photo translation (OCR)
-	•	Auto-language detection
-
-📞 AI Call Assistant
-	•	Real-time interpreter during a phone call
-	•	WebSocket low latency
-	•	Supports WhatsApp, Telegram, native dialer
-
-🎓 German A1–C1 Course
-	•	Lessons (audio, text, pictures, dialogues)
-	•	Grammar blocks
-	•	Vocabulary lists
-	•	Exercises + tests
-	•	Speaking practice via microphone
-	•	Automatic exam preparation (DTZ, TELC, Goethe)
-
-Lessons stored as:
-
-/lessons/A1/01_introduction.json
-/lessons/A1/02_alphabet.json
-/lessons/B1/...
-/lessons/C1/...
-
-🤖 GPT / AI Chat
-	•	ChatGPT-style conversation
-	•	Task assistance
-	•	Correction of pronunciation & grammar
-	•	Speaking roleplay dialogs
-
-API:
-
-POST /chat/gpt
-
-
-⸻
-
-📡 API Overview
-
-Translation
-
-POST /translate
-{
-  "from": "auto",
-  "to": "de",
-  "text": "Hello"
-}
-
-Voice Call
-
-POST /call/start
-POST /call/stop
-WS  /call/live
-
-Lessons
-
-GET /lessons/A1
-GET /lessons/A1/01
-
-Vocabulary / Progress
-
-GET /user/progress
-POST /user/word/save
-
-
-⸻
-
-🏗 Architecture
-
-WebKurierPhoneCore
-│
-├── src/
-│   ├── api/
-│   │   ├── translate.py
-│   │   ├── call.py
-│   │   ├── lessons.py
-│   │   ├── gpt.py
-│   ├── core/
-│   │   ├── tts/
-│   │   ├── stt/
-│   │   ├── translator/
-│   │   ├── call_engine/
-│   │   └── gpt_engine/
-│   ├── models/
-│   └── utils/
-│
-├── lessons/
-│   ├── A1/
-│   ├── A2/
-│   ├── B1/
-│   ├── B2/
-│   ├── C1/
-│
-└── docker/
-
-
-⸻
-
-🐳 Docker
-
+```yaml
 version: "3.9"
 services:
   phonecore:
@@ -184,33 +67,137 @@ services:
     volumes:
       - ./lessons:/app/lessons
     environment:
-      OPENAI_KEY=${OPENAI_KEY}
-      TRANSLATE_API=${TRANSLATE_API}
+      OPENAI_KEY: ${OPENAI_KEY}
+      TRANSLATE_API: ${TRANSLATE_API}
 
-Старт:
+Start:
 
 docker compose up --build
 
+Integrations
+	•	WebKurierPhone-iOS / WebKurierPhone-Android (mobile apps)
+	•	Telegram & WhatsApp bots
+	•	WebKurierCore (web UI, terminal, agents)
+	•	WebKurierChain (logins, encrypted data)
+	•	WebKurierSecurity (GDPR, security layer)
+	•	WebKurierHybrid (orchestrator repository, uses PhoneCore as submodule)
 
 ⸻
 
-🔗 Integrations
-	•	Telegram bot
-	•	WhatsApp bot
-	•	WebKurierCore
-	•	WebKurierPhone-iOS
-	•	WebKurierPhone-Android
-	•	WebKurierChain (логины, хранение данных)
-	•	WebKurierSecurity (GDPR, шифрование)
+🇷🇺 Русский
+
+WebKurierPhoneCore — серверная платформа для мобильного переводчика и системы обучения немецкому (A1–C1) с поддержкой живых звонков с AI-агентами.
+
+Функции:
+	•	Мгновенный перевод текста и голоса (включая перевод фото через OCR)
+	•	Звонки с AI-переводчиком и экспертными агентами (REST + WebSocket)
+	•	GPT-чат и голосовой ассистент
+	•	Курсы немецкого A1–C1 с аудио, картинками и видео
+	•	Тренажёр словаря + интервальные повторы (SRS)
+	•	Тренировка произношения (STT/TTS)
+	•	Учёт прогресса пользователя
+	•	Многоязычное меню (25+ языков с флагами)
+
+Агенты (звонки, чат, обучение)
+
+Базовые агенты ядра:
+	•	TranslatorAgent — перевод текста/голоса в реальном времени
+	•	VoiceAgent — голосовой движок, STT/TTS
+	•	CallAgent — управление звонками и конференциями
+	•	GPTDialogAgent — диалоговый ассистент (чат + голос)
+	•	LessonsAgent — уроки A1–C1, упражнения, экзамены
+	•	ProgressAgent — прогресс, словарь, повторы
+
+Профессиональные и обучающие агенты (по выбору пользователя):
+	•	Юрист, бизнес, бухгалтер, маркетинг, медицина, математика, физика
+	•	Персоналии: TeacherAgent, FriendlyChatAgent, RoleplayAgent,
+CasualPartnerAgent, RomanticAgent (романтический собеседник для практики языка)
+
+Краткий обзор API
+	•	Перевод: POST /translate
+	•	Звонки: POST /call/start, POST /call/stop, WS /call/live
+	•	Уроки: GET /lessons/{level}, GET /lessons/{level}/{id}
+	•	Словарь/прогресс: GET /user/progress, POST /user/word/save
+
+Архитектура (в общих чертах)
+	•	src/api/ — REST/WebSocket-эндпоинты
+	•	src/core/ — движки TTS/STT, перевод, звонки, GPT, агенты
+	•	lessons/ — уроки A1–C1 в формате JSON
+	•	docker/ — файлы для развёртывания
+
+Интеграции и экосистема
+	•	Клиенты: iOS / Android приложения, боты Telegram/WhatsApp
+	•	Связь с репозиториями: WebKurierCore, WebKurierChain, WebKurierSecurity
+	•	Используется как модуль в WebKurierHybrid (единый оркестратор проекта)
 
 ⸻
 
-🏁 Status
+Status: v0.1 (foundation ready), produced & developed in Germany.
+Languages: EN / DE / UA / RU (expandable to 25+).
+Apps: iOS + Android (native).
 
-Version: v0.1 (foundation is ready)
-Languages: EN / DE / UA / RU (expandable to 25+)
-Apps: iOS + Android (native)
+---
 
-⸻
+## 2. Структура папок и агентов (НЕ в README, а для работы в репо)
+
+Эта часть — чисто рабочее ТЗ для проекта, её можно положить в `docs/architecture_agents.md` или в issues.
+
+### 2.1. Минимальная структура репозитория
+
+```text
+WebKurierPhoneCore/
+├── src/
+│   ├── api/
+│   │   ├── translate.py      # /translate
+│   │   ├── call.py           # /call/start, /call/stop, WS /call/live
+│   │   ├── lessons.py        # /lessons/*
+│   │   ├── gpt.py            # /chat/gpt (общий GPT-чат)
+│   │   └── agents.py         # /agents/chat, /agents/list, /agents/status
+│   ├── core/
+│   │   ├── tts/              # движок синтеза речи
+│   │   ├── stt/              # распознавание речи
+│   │   ├── translator/       # логика перевода
+│   │   ├── call_engine/      # маршрутизация аудио, WebSocket
+│   │   ├── gpt_engine/       # вызовы LLM
+│   │   └── agents/           # все AI-агенты
+│   ├── models/
+│   └── utils/
+├── lessons/
+│   ├── A1/
+│   ├── A2/
+│   ├── B1/
+│   ├── B2/
+│   └── C1/
+└── docker/
+    └── docker-compose.yml
+
+2.2. Папка src/core/agents/ (поэтапное наполнение)
+
+src/core/agents/
+├── __init__.py              # BaseAgent + registry
+├── translator_agent.py      # TranslatorAgent
+├── voice_agent.py           # VoiceAgent
+├── call_agent.py            # CallAgent
+├── gpt_dialog_agent.py      # GPTDialogAgent
+├── lessons_agent.py         # LessonsAgent
+├── progress_agent.py        # ProgressAgent
+├── legal_agent.py           # LegalAgent
+├── business_agent.py        # BusinessAgent
+├── accountant_agent.py      # AccountantAgent
+├── marketing_agent.py       # MarketingAgent
+├── medical_agent.py         # MedicalAgent
+├── math_agent.py            # MathAgent
+├── physics_agent.py         # PhysicsAgent
+├── teacher_agent.py         # TeacherAgent
+├── friendly_chat_agent.py   # FriendlyChatAgent
+├── roleplay_agent.py        # RoleplayAgent
+├── casual_partner_agent.py  # CasualPartnerAgent
+└── romantic_agent.py        # RomanticAgent
+
+Заполнять можно постепенно:
+	1.	Сначала translator_agent, voice_agent, call_agent, gpt_dialog_agent.
+	2.	Затем lessons_agent, progress_agent.
+	3.	Потом экспертные (legal, business, medical …).
+	4.	В конце — “персональности” (romantic, teacher, rol
 
 
