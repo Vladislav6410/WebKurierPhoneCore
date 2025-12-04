@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-// Карта команд языка (можно импортировать и из отдельного файла при желании)
+// Карта языковых команд в том же стиле, что в WebKurierCore
 export const LANGUAGE_COMMANDS = {
   spanish:   "es",
   russian:   "ru",
@@ -28,15 +28,16 @@ export function isKnownLangCommand(commandName) {
   return !!getLanguageCode(commandName);
 }
 
-// URL ядра Core API для GPT-переводов
-const CORE_TRANSLATOR_API =
+// Базовый URL ядра WebKurierCore
+const CORE_API_BASE =
   process.env.WEBKURIER_CORE_API || "http://localhost:8080";
 
 /**
- * Шлём переводческий запрос в Core API (GPT-ветка)
+ * Простая обёртка вокруг GPT-эндпоинта ядра:
+ *   POST /api/translator/gpt
  */
 export async function translateViaCore(text, targetLang, sourceLang = "auto") {
-  const url = `${CORE_TRANSLATOR_API}/api/translator/gpt`;
+  const url = `${CORE_API_BASE}/api/translator/gpt`;
   const resp = await axios.post(url, {
     text,
     targetLang,
@@ -46,20 +47,36 @@ export async function translateViaCore(text, targetLang, sourceLang = "auto") {
 }
 
 /**
- * Главный обработчик PhoneCore:
- *   "/spanish Hello everyone" → распознаём, ходим в Core API GPT, возвращаем перевод
+ * Главный обработчик строки от пользователя PhoneCore.
+ *
+ * Пример:
+ *   rawLine = "/spanish Hello everyone"
+ *
+ * Возвращает:
+ *   null                       — если это не переводческая команда;
+ *   { kind: "translator-error", message } — если ошибка в использовании;
+ *   {
+ *     kind: "translator-ok",
+ *     langCode: "es",
+ *     provider: "GPT",
+ *     original: "Hello everyone",
+ *     translated: "<перевод>"
+ *   }
  */
-export async function handleTranslatorCommand(rawLine, userId = "phone-user") {
+export async function handlePhoneTranslateCommand(
+  rawLine,
+  userId = "phone-user"
+) {
   if (typeof rawLine !== "string" || !rawLine.startsWith("/")) {
-    return null;
+    return null; // не наша команда
   }
 
   const [first, ...parts] = rawLine.trim().split(" ");
-  const cmdName = first.slice(1).toLowerCase();
+  const cmdName = first.slice(1).toLowerCase(); // убираем '/'
   const text = parts.join(" ");
 
   if (!isKnownLangCommand(cmdName)) {
-    return null;
+    return null; // пусть обработают другие команды
   }
 
   const targetLang = getLanguageCode(cmdName);
@@ -67,4 +84,31 @@ export async function handleTranslatorCommand(rawLine, userId = "phone-user") {
   if (!text) {
     return {
       kind: "translator-error",
-      message: `Text is required. Example
+      message: `Введите текст после команды, например: /${cmdName} Hello everyone`
+    };
+  }
+
+  try {
+    const translation = await translateViaCore(text, targetLang, "auto");
+
+    return {
+      kind: "translator-ok",
+      langCode: targetLang,
+      provider: "GPT", // PhoneCore всегда ходит в GPT-ветку ядра
+      original: text,
+      translated: translation
+    };
+  } catch (err) {
+    return {
+      kind: "translator-error",
+      message: `Ошибка запроса к Core API: ${err.message || err}`
+    };
+  }
+}
+
+// default-экспорт на всякий случай
+export default {
+  handlePhoneTranslateCommand
+};
+
+
