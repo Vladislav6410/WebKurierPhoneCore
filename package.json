@@ -1,7 +1,26 @@
-"dependencies": {
-  "axios": "^1.7.0",
-  ...
-}"scripts": {
-  ...
-  "translator:test": "node engine/translator/tests/phonecore-translator-runner.js"
+{
+  "name": "webkuriercore",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server/index.js",
+    "lint": "eslint .",
+    "test": "jest --passWithNoTests",
+    "merge:feedback": "node engine/agents/romantic/tools/merge_feedback.js",
+    "translator:test": "node engine/agents/translator/tests/phonecore-translator-runner.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.0",
+    "express": "^4.19.2",
+    "stripe": "^14.0.0",
+    "openai": "^4.0.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0"
+  }
 }
+
+
